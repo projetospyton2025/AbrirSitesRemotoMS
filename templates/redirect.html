@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecionando para {{ site.name }}</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="2;url={{ site.url }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .redirect-container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 80%;
+        }
+        h1 {
+            color: #0066cc;
+            margin-bottom: 20px;
+        }
+        .progress {
+            height: 4px;
+            background-color: #eee;
+            margin: 20px 0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #0066cc;
+            animation: progress 2s linear;
+        }
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        .url {
+            color: #666;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+        .manual-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .manual-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="redirect-container">
+        <h1>Redirecionando para {{ site.name }}</h1>
+        <div class="url">{{ site.url }}</div>
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div>
+        <p>Você será redirecionado automaticamente em 2 segundos.</p>
+        <a href="{{ site.url }}" class="manual-link">Clique aqui se não for redirecionado automaticamente</a>
+    </div>
+</body>
+</html>

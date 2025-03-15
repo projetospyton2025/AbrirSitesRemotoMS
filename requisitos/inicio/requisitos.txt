@@ -1,0 +1,200 @@
+eu preciso acessar o google drive que esta no caminho.. 
+J:\Meu DrIve\ProjetosPython\LoterIas>
+
+
+a partir dai mostar de forma amigável quais são as pastas que tem neste diretório..
+Assim que o usuario ver quais são.. ele podera pedir pra acessar.. 
+exemplo
+Lotofacil
+DiaDeSorte
+Conferidores
+Geradores
+Estratégia
+
+
+AJUSTE PARA QUE POSSA ACESSAR O CAMINHO ACIMA ACESSAR O ENDEREÇO E CLICAR PARA ABRIR O APP.PY (python app.py)
+
+
+como ja esta olha
+Navegador de Diretórios
+Super7
+Lotofacil
+DiaDeSorte
+Conferidores
+Geradores
+Estrategias
+.idea
+MyOwnAPI
+Executar app.py
+TestingProxy
+Executar app.py
+AbrirSitesLocais
+Executar app.py
+
+
+ajuste agora para acessar estes aqui.. com mostro aqui..ok
+J:\Meu DrIve\ProjetosPython\LoterIas\Super7\
+J:\Meu DrIve\ProjetosPython\LoterIas\Lotofacil\geradorJogos\
+J:\Meu DrIve\ProjetosPython\LoterIas\DiaDeSorte\
+J:\Meu DrIve\ProjetosPython\LoterIas\Conferidores\LotofacilConf\
+J:\Meu DrIve\ProjetosPython\LoterIas\Conferidores\megasenaconferidor\
+J:\Meu DrIve\ProjetosPython\LoterIas\Geradores\MegaSenaGerador\
+J:\Meu DrIve\ProjetosPython\LoterIas\Estrategias\Colunas\
+J:\Meu DrIve\ProjetosPython\LoterIas\Estrategias\PalpitesMegaSena\
+J:\Meu DrIve\ProjetosPython\LoterIas\Estrategias\TabelaCruzamentoNumeros\
+J:\Meu DrIve\ProjetosPython\LoterIas\MyOwnAPI\
+J:\Meu DrIve\ProjetosPython\LoterIas\TestingProxy\
+J:\Meu DrIve\ProjetosPython\LoterIas\AbrirSitesLocais\
+
+
+
+
+from flask import Flask, render_template, jsonify
+import os
+
+app = Flask(__name__)
+BASE_DIR = r"J:\Meu DrIve\ProjetosPython\LoterIas"
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/list_dirs')
+def list_dirs():
+    dirs = [d for d in os.listdir(BASE_DIR) if os.path.isdir(os.path.join(BASE_DIR, d))]
+    return jsonify(dirs)
+
+@app.route('/list_subdirs/<path>')
+def list_subdirs(path):
+    full_path = os.path.join(BASE_DIR, path)
+    if os.path.exists(full_path):
+        subdirs = [d for d in os.listdir(full_path) if os.path.isdir(os.path.join(full_path, d))]
+        return jsonify(subdirs)
+    return jsonify([])
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+window.onload = async function() {
+    const response = await fetch('/list_dirs');
+    const directories = await response.json();
+    const container = document.getElementById('directories');
+
+    directories.forEach(dir => {
+        const dirDiv = document.createElement('div');
+        dirDiv.className = 'directory';
+        dirDiv.innerHTML = 
+            
+            <button class='run-button' onclick='runApp("")'>Executar app.py</button>
+        ;
+        
+        dirDiv.addEventListener('click', async (e) => {
+            if (e.target.className !== 'run-button') {
+                const subResponse = await fetch(/list_subdirs/);
+                const subdirs = await subResponse.json();
+                
+                const subdirsDiv = document.createElement('div');
+                subdirsDiv.className = 'subdirectory';
+                subdirs.forEach(subdir => {
+                    subdirsDiv.innerHTML += 
+                        <div class='directory'>
+                            
+                            <button class='run-button' onclick='runApp("/")'>
+                                Executar app.py
+                            </button>
+                        </div>
+                    ;
+                });
+                
+                const existing = dirDiv.querySelector('.subdirectory');
+                if (existing) {
+                    existing.remove();
+                } else {
+                    dirDiv.appendChild(subdirsDiv);
+                }
+            }
+        });
+        
+        container.appendChild(dirDiv);
+    });
+};
+
+async function runApp(path) {
+    try {
+        const response = await fetch(/run_app/);
+        const result = await response.json();
+        if (result.success) {
+            alert(App.py executado em );
+        } else {
+            alert(Erro: );
+        }
+    } catch (error) {
+        alert(Erro ao executar app.py: Não é possível localizar uma variável com nome '_PYTHON_VENV_PROMPT_PREFIX'.);
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Navegador de Diretórios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Navegador de Diretórios</h1>
+        <div id="directories"></div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.directory {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.directory:hover {
+    background-color: #e0e0e0;
+}
+
+.subdirectory {
+    margin-left: 20px;
+    padding: 5px;
+    border-left: 2px solid #2196f3;
+}
+
+.run-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+.run-button:hover {
+    background-color: #45a049;
+}
+
+
