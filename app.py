@@ -45,7 +45,7 @@ SITES = [
             {'name': 'Estratégias | Palpites II','url': 'https://palpitesms.onrender.com/'},
             {'name': 'Geradores | Baseado em Dígitos','url': 'https://geradorbaseadoemdigitosmegasena.netlify.app/'},
             {'name': 'Estatísticas | Análise de Dígitos','url': 'https://resultadosdigitosmegasena.onrender.com/' },
-            {'name': 'Estatísticas | Resumo','url': 'https://resumomegasena.onrender.com/'},
+            {'name': 'Estatísticas | Resumo','url': 'https://resumomegasena-1.onrender.com/'},
         ]
 
 @app.route('/')
